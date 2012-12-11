@@ -30,13 +30,13 @@ public:
 		assert(thing is null);
 	}
 
-	void breakApart()
+	override void breakApart()
 	{
 		breakApartAndNull(thing);
 		super.breakApart();
 	}
 
-	void update(Point3d pos, double heading, double pitch)
+	override void update(Point3d pos, double heading, double pitch)
 	{
 		auto rot = Quatd(heading, pitch, 0);
 		GameActor.setPosition(pos);

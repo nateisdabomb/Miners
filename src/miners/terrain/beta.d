@@ -50,7 +50,7 @@ public:
 
 	}
 
-	void breakApart()
+	override void breakApart()
 	{
 		foreach(ref row; region)
 			foreach(ref r; row)
@@ -66,7 +66,7 @@ public:
 	 */
 
 
-	final Block opIndex(int x, int y, int z)
+	override final Block opIndex(int x, int y, int z)
 	{
 		Block b;
 		if (y < 0)
@@ -94,7 +94,7 @@ public:
 		return b;
 	}
 
-	final Block opIndexAssign(Block b, int x, int y, int z)
+	override final Block opIndexAssign(Block b, int x, int y, int z)
 	{
 		if (y < 0)
 			return Block();
@@ -134,7 +134,7 @@ public:
 	/**
 	 * Return the type for block at location.
 	 */
-	final ubyte getType(int x, int y, int z)
+	override final ubyte getType(int x, int y, int z)
 	{
 		if (y < 0)
 			return 0;
@@ -152,7 +152,7 @@ public:
 	/**
 	 * Set the type for block at location.
 	 */
-	final ubyte setType(ubyte type, int x, int y, int z)
+	override final ubyte setType(ubyte type, int x, int y, int z)
 	{
 		if (y < 0)
 			return 0;
@@ -288,7 +288,7 @@ public:
 	/**
 	 * Marks the given volume as dirty.
 	 */
-	final void markVolumeDirty(int x, int y, int z, uint sx, uint sy, uint sz)
+	override final void markVolumeDirty(int x, int y, int z, uint sx, uint sy, uint sz)
 	{
 		// We must mark all chunks that neighbor the changed area.
 		 x -= 1;  y -= 1;  z -= 1;
@@ -372,7 +372,7 @@ public:
 	 * Set the current center from which chunks are built.
 	 * Coords in chunk space.
 	 */
-	void setCenter(int xNew, int yNew, int zNew)
+	override void setCenter(int xNew, int yNew, int zNew)
 	{
 		setCenterRegions(xNew, zNew);
 
@@ -395,7 +395,7 @@ public:
 	 * Sets the radius in chunks of which chunks should
 	 * be built and rendered.
 	 */
-	void setViewRadii(int radii)
+	override void setViewRadii(int radii)
 	{
 		if (radii < view_radii) {
 			for (int x; x < width; x++) {
@@ -415,7 +415,7 @@ public:
 	 * Which type of mesh should be built, needs to match up
 	 * with the capabilities of the current renderer.
 	 */
-	void setBuildType(TerrainBuildTypes type, string name)
+	override void setBuildType(TerrainBuildTypes type, string name)
 	{
 		if (type == currentBuildType)
 			return;
@@ -433,7 +433,7 @@ public:
 	/**
 	 * Build a single chunk, returns false if no one was built.
 	 */
-	bool buildOne()
+	override bool buildOne()
 	{
 		bool dob(int x, int z) {
 			bool valid = true;
@@ -492,7 +492,7 @@ public:
 	/**
 	 * Start over from the begining when building chunks.
 	 */
-	void resetBuild()
+	override void resetBuild()
 	{
 		// Reset the saved position for the buildOne function
 		save_build_i = 0;
@@ -503,7 +503,7 @@ public:
 	/**
 	 * Unbuild all the meshes.
 	 */
-	void unbuildAll()
+	override void unbuildAll()
 	{
 		for (int x; x < width; x++) {
 			for (int z; z < depth; z++) {

@@ -2,8 +2,9 @@
 // See copyright notice in src/charge/charge.d (GPLv2 only).
 module miners.importer.info;
 
-import std.file : exists, DirEntry, listdir;
-import std.string : format, toString;
+import stdx.string : toString;
+import std.file : exists, dirEntries, DirEntry, SpanMode;
+import std.string : format;
 
 import charge.util.vector;
 import charge.math.point3d;
@@ -70,24 +71,20 @@ MinecraftLevelInfo[] scanForLevels(string dir = null)
 	if (dir is null)
 		dir = getMinecraftSaveFolder();
 
-	// Called for each file/directory found in directory
-	bool cb(DirEntry *de) {
-
-		// Early out any files that are in the save directory
-		if (!de.isdir)
-			return true;
-
-		// Check if the level is okay
-		auto li = checkMinecraftLevel(de.name);
-		if (li is null)
-			return true;
-
-		levels ~= *li;
-		return true;
-	}
-
 	try {
-		listdir(dir, &cb);
+		// Called for each file/directory found in directory
+		foreach (DirEntry de; dirEntries(dir, SpanMode.shallow)) {
+			// Early out any files that are in the save directory
+			if (!de.isDir)
+				continue;
+
+			// Check if the level is okay
+			auto li = checkMinecraftLevel(de.name);
+			if (li is null)
+				continue;
+
+			levels ~= *li;
+		}
 	} catch (Exception e) {
 		return null;
 	}
@@ -117,7 +114,7 @@ private bool getInfoFromLevelDat(string level, out string name, out Point3d spaw
 
 	levelName = nbt_find_by_name(data, "LevelName");
 	if (levelName && levelName.type == TAG_STRING)
-		name = toString(levelName.tag_string).dup; // Need to dup
+		name = toString(levelName.tag_string).idup; // Need to dup
 
 	spawn = Point3d(0, 64, 0);
 	foreach(int i, n; ["SpawnX", "SpawnY", "SpawnZ"]) {

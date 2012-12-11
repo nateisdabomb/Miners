@@ -19,7 +19,7 @@ struct TerrainWrapper
 	{
 		auto s = LuaState(l);
 		auto w = s.checkClass!(Terrain)(1, false);
-		auto k = s.checkString(2);;
+		auto k = s.checkString(2);
 
 		switch(k) {
 		default:

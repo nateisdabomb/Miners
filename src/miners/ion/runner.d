@@ -59,7 +59,7 @@ public:
 		assert(lem is null);
 	}
 
-	void close()
+	override void close()
 	{
 		breakApartAndNull(sl);
 		if (c !is null) {
@@ -75,19 +75,14 @@ public:
 		super.close();
 	}
 
-	void render()
-	{
-
-	}
-
-	void logic()
+	override void logic()
 	{
 		super.logic();
 
 		c.step(1000);
 	}
 
-	void render(GfxRenderTarget rt)
+	override void render(GfxRenderTarget rt)
 	{
 		cam.resize(rt.width, rt.height);
 

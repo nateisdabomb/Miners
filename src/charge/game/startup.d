@@ -5,7 +5,16 @@
  */
 module charge.game.startup;
 
-import charge.charge;
+import charge.util.vector;
+import charge.math.color;
+
+import charge.gfx.font;
+import charge.gfx.draw;
+import charge.gfx.target;
+import charge.ctl.input;
+import charge.ctl.mouse;
+import charge.ctl.keyboard;
+import charge.sys.logger;
 
 import charge.game.runner;
 
@@ -24,11 +33,12 @@ protected:
 private:
 	Router r;
 
-	mixin SysLogging;
-	CtlKeyboard keyboard;
-	CtlMouse mouse;
+	mixin Logging;
 
-	GfxDraw d;
+	Keyboard keyboard;
+	Mouse mouse;
+
+	Draw d;
 
 	Vector!(Task) active;
 	Vector!(Task) done;
@@ -41,10 +51,10 @@ public:
 		super(Type.Menu);
 		this.r = r;
 
-		keyboard = CtlInput().keyboard;
-		mouse = CtlInput().mouse;
+		keyboard = Input().keyboard;
+		mouse = Input().mouse;
 
-		d = new GfxDraw();
+		d = new Draw();
 
 		r.addBuilder(&build);
 	}
@@ -55,7 +65,7 @@ public:
 		assert(signaled.length == 0);
 	}
 
-	void close()
+	override void close()
 	{
 		r.removeBuilder(&build);
 
@@ -77,17 +87,17 @@ public:
 		signaled.removeAll();
 	}
 
-	void logic()
+	override void logic()
 	{
 		/* nothing */
 	}
 
-	void render(GfxRenderTarget rt)
+	override void render(RenderTarget rt)
 	{
 		d.target = rt;
 		d.start();
 
-		auto f = gfxDefaultFont;
+		auto f = BitmapFont.defaultFont;
 
 		const barWidth = 50;
 
@@ -125,12 +135,12 @@ public:
 		d.stop();
 	}
 
-	void assumeControl()
+	override void assumeControl()
 	{
 		keyboard.down ~= &this.keyDown;
 	}
 
-	void dropControl()
+	override void dropControl()
 	{
 		keyboard.down -= &this.keyDown;
 	}
@@ -230,7 +240,7 @@ protected:
 	 */
 
 
-	void keyDown(CtlKeyboard kb, int sym, dchar unicode, char[] str)
+	void keyDown(Keyboard kb, int sym, dchar unicode, char[] str)
 	{
 		if (sym != 27)
 			return;

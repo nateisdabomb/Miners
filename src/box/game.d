@@ -40,7 +40,7 @@ public:
 			push(new ServerRunner(this, port));
 	}
 
-	void close()
+	override void close()
 	{
 		super.close();
 	}

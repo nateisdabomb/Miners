@@ -28,7 +28,7 @@ public:
 		assert(phy is null);
 	}
 
-	void breakApart()
+	override void breakApart()
 	{
 		w.remTicker(this);
 		breakApartAndNull(gfx);
@@ -36,7 +36,7 @@ public:
 		super.breakApart();
 	}
 
-	void tick()
+	override void tick()
 	{
 		gfx.position = phy.position;
 		gfx.rotation = phy.rotation;
@@ -159,14 +159,14 @@ class Car : Ticker
 		assert(wheels[0] is null);
 	}
 
-	void breakApart()
+	override void breakApart()
 	{
 		foreach(ref w; wheels)
 			breakApartAndNull(w);
 		super.breakApart();
 	}
 
-	void tick()
+	override void tick()
 	{
 		gfx.position = phy.position - (phy.rotation * Vector3d(0.0, 0.2, 0.0));
 		gfx.rotation = phy.rotation * Quatd(PI, Vector3d.Up);
@@ -247,9 +247,6 @@ public:
 		spl.position = Point3d(0.0, 5.0, 15.0);
 		spl.far = 150;
 
-		w.phy.setStepLength(10);
-
-
 		new GameStaticCube(w, Point3d(0.0, -5.0, 0.0), Quatd(), 200.0, 10.0, 200.0);
 
 		new GameStaticRigid(w, Point3d(0.0, 0.0, -15.0), Quatd(), "res/bath.bin", "res/bath.bin");
@@ -265,7 +262,7 @@ public:
 	{
 	}
 
-	void close()
+	override void close()
 	{
 		breakApartAndNull(w);
 		super.close();
@@ -277,7 +274,7 @@ protected:
 		removable ~= t;
 	}
 
-	void input()
+	override void input()
 	{
 		SDL_Event e;
 
@@ -414,7 +411,7 @@ protected:
 
 	}
 
-	void logic()
+	override void logic()
 	{
 		w.tick();
 
@@ -458,7 +455,7 @@ protected:
 		cam.rotation = Quatd(angle, Vector3d.Up);
 	}
 
-	void render()
+	override void render()
 	{
 		GfxDefaultTarget rt = GfxDefaultTarget();
 		rt.clear();
@@ -467,7 +464,7 @@ protected:
 		rt.swap();
 	}
 
-	void network()
+	override void network()
 	{
 	}
 }

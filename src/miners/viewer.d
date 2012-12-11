@@ -83,7 +83,7 @@ public:
 		assert(w is null);
 	}
 
-	void close()
+	override void close()
 	{
 		breakApartAndNull(m);
 		breakApartAndNull(cam);
@@ -93,7 +93,7 @@ public:
 		super.close();
 	}
 
-	void keyDown(CtlKeyboard kb, int sym, dchar unicode, char[] str)
+	override void keyDown(CtlKeyboard kb, int sym, dchar unicode, char[] str)
 	{
 		switch(sym) {
 		case SDLK_w:
@@ -121,7 +121,7 @@ public:
 		}
 	}
 
-	void keyUp(CtlKeyboard kb, int sym)
+	override void keyUp(CtlKeyboard kb, int sym)
 	{
 		switch(sym) {
 		case SDLK_w:
@@ -172,7 +172,7 @@ public:
 		}
 	}
 
-	void mouseMove(CtlMouse mouse, int ixrel, int iyrel)
+	override void mouseMove(CtlMouse mouse, int ixrel, int iyrel)
 	{
 		if (cam_moveing || (grabbed && !light_moveing)) {
 			double xrel = ixrel;
@@ -201,7 +201,7 @@ public:
 		}
 	}
 
-	void mouseDown(CtlMouse m, int button)
+	override void mouseDown(CtlMouse m, int button)
 	{
 		if (button == 1)
 			cam_moveing = true;
@@ -209,7 +209,7 @@ public:
 			light_moveing = true;
 	}
 
-	void mouseUp(CtlMouse m, int button)
+	override void mouseUp(CtlMouse m, int button)
 	{
 		if (button == 1)
 			cam_moveing = false;
@@ -217,13 +217,13 @@ public:
 			light_moveing = false;
 	}
 
-	void logic()
+	override void logic()
 	{
 		m.tick();
 		super.logic();
 	}
 
-	void render(GfxRenderTarget rt)
+	override void render(GfxRenderTarget rt)
 	{
 		cam.resize(rt.width, rt.height);
 		r.render(w.gfx, cam.current, rt);

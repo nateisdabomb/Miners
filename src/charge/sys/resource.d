@@ -263,7 +263,7 @@ public:
 			marked = null;
 
 			foreach(k; keys)
-				map.remove(k.dup);
+				map.remove(k.idup);
 			foreach(v; values)
 				delete v;
 		}

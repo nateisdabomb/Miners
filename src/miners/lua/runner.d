@@ -71,7 +71,7 @@ public:
 		assert(w is null);
 	}
 
-	void close()
+	override void close()
 	{
 		if (initialized) {
 			breakApartAndNull(c);
@@ -92,7 +92,7 @@ public:
 	 */
 
 
-	void logic()
+	override void logic()
 	{
 		s.getGlobalz("logic");
 		if (s.call() == 2) {
@@ -101,7 +101,7 @@ public:
 		super.logic();
 	}
 
-	void render(GfxRenderTarget rt)
+	override void render(GfxRenderTarget rt)
 	{
 		c.resize(rt.width, rt.height);
 		r.render(w.gfx, c.current, rt);
@@ -298,7 +298,7 @@ protected:
 	 */
 
 
-	void keyUp(CtlKeyboard kb, int sym)
+	override void keyUp(CtlKeyboard kb, int sym)
 	{
 		s.getGlobalz("keyUp");
 		s.pushNumber(sym);
@@ -308,7 +308,7 @@ protected:
 		}
 	}
 
-	void keyDown(CtlKeyboard kb, int sym, dchar unicode, char[] str)
+	override void keyDown(CtlKeyboard kb, int sym, dchar unicode, char[] str)
 	{
 		// XXX Hack
 		if (sym == 27)
@@ -327,7 +327,7 @@ protected:
 		}
 	}
 
-	void mouseUp(CtlMouse m, int button)
+	override void mouseUp(CtlMouse m, int button)
 	{
 		s.getGlobalz("mouseUp");
 		s.pushNumber(button);
@@ -337,7 +337,7 @@ protected:
 		}
 	}
 
-	void mouseDown(CtlMouse m, int button)
+	override void mouseDown(CtlMouse m, int button)
 	{
 		s.getGlobalz("mouseDown");
 		s.pushNumber(button);
@@ -347,7 +347,7 @@ protected:
 		}
 	}
 
-	void mouseMove(CtlMouse mouse, int xrel, int yrel)
+	override void mouseMove(CtlMouse mouse, int xrel, int yrel)
 	{
 		s.getGlobalz("mouseMove");
 		s.pushNumber(xrel);

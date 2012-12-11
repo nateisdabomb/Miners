@@ -125,7 +125,7 @@ public:
 		i.tick();
 	}
 
-	void loop()
+	override void loop()
 	{
 		long now = SDL_GetTicks();
 		long step = 10;
@@ -201,7 +201,7 @@ public:
 		assert(currentInput is null);
 	}
 
-	void close()
+	override void close()
 	{
 		while(vec.length || del.length) {
 			deleteAll();
@@ -211,7 +211,7 @@ public:
 		super.close();
 	}
 
-	void render()
+	override void render()
 	{
 		if (!gfxLoaded)
 			return;
@@ -236,7 +236,7 @@ public:
 		curSync = gfxSyncInsert();
 	}
 
-	void logic()
+	override void logic()
 	{
 		// This make sure we at least call
 		// the builders once per frame.
@@ -252,11 +252,11 @@ public:
 		}
 	}
 
-	void network()
+	override void network()
 	{
 	}
 
-	void idle(long time)
+	override void idle(long time)
 	{
 		// If we have built at least once this frame and have very little
 		// time left don't build again. But we always build one each frame.
@@ -302,12 +302,12 @@ public:
 	 */
 
 
-	void quit()
+	override void quit()
 	{
 		running = false;
 	}
 
-	void push(Runner r)
+	override void push(Runner r)
 	{
 		assert(r !is null);
 
@@ -330,23 +330,23 @@ public:
 		}
 	}
 
-	void remove(Runner r)
+	override void remove(Runner r)
 	{
 		vec.remove(r);
 		dirty = true;
 	}
 
-	void addBuilder(bool delegate() dg)
+	override void addBuilder(bool delegate() dg)
 	{
 		builders ~= dg;
 	}
 
-	void removeBuilder(bool delegate() dg)
+	override void removeBuilder(bool delegate() dg)
 	{
 		builders.remove(dg);
 	}
 
-	void deleteMe(Runner r)
+	override void deleteMe(Runner r)
 	{
 		if (r is null)
 			return;
