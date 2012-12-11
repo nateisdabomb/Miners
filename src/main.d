@@ -4,12 +4,8 @@ module main;
 import std.stdio : writefln;
 import charge.core;
 
-static import test.lua;
-static import test.game;
-static import test.frustum;
-static import test.terrain;
-
 static import box.game;
+static import test.game;
 static import miners.game;
 
 // For memory tracking
@@ -56,11 +52,8 @@ int main(string[] args)
 		return 0;
 
 	try {
-//		auto g = new test.lua.Game(args);
-//		auto g = new test.game.Game(args);
-//		auto g = new test.frustum.Game(args);
-//		auto g = new test.terrain.Game(args);
 //		auto g = new box.game.Game(args);
+//		auto g = new test.game.Game(args);
 		auto g = new miners.game.Game(args);
 
 		g.loop();
